@@ -1,0 +1,6 @@
+# CTF Challenge Reflection
+
+My approach to solving the Capture the Flag challenge involved a mix of cryptographic hashing, data forensics, and machine learning interpretability. 
+
+I began by computing the SHA256 hash of my student ID ("STU026") to generate the unique key "927F09DE". I initially attempted to filter books by exact rating 5.0 and review count 1234, but encountered data precision issues. I pivoted to searching the `reviews.csv` directly for my hash key, which successfully located the fake review "Best read ever 927F09DE". This linked to the book "The Ice Child" (ID: 000751834X).
+For the final flag, I isolated genuine 5-star reviews for this book. I defined "suspicious" reviews as those under 15 words containing superlatives like "best" or "perfect". Using a Logistic Regression model trained on bag-of-words features, I distinguished between genuine and suspicious text. Finally, I applied SHAP (SHapley Additive exPlanations) to the genuine reviews. The LinearExplainer identified "write", "stories", and "continues" as the top words contributing to a "genuine" classification, which combined with my ID produced the final flag.
